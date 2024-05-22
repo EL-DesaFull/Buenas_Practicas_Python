@@ -1,6 +1,3 @@
-from os import system
-from random import randint
-
 #Clases
 
 class Persona:
@@ -9,46 +6,41 @@ class Persona:
         self.apellido = apellido
 
 class Cliente(Persona):
-    def __init__(self, nombre, apellido, numero_cuenta, balance):
+    def __init__(self, nombre, apellido, numero_cuenta, balance = 0):
         super().__init__(nombre, apellido)
         self.numero_cuenta = numero_cuenta
         self.balance = balance
 
     def __str__(self):
-        return f"Cliente: {self.nombre} {self.apellido}\nNúmero de Cuenta: {self.numero_cuenta}\nBalance: {self.balance}"
+        return f"Cliente: {self.nombre} {self.apellido}\nNúmero de Cuenta: {self.numero_cuenta}\nBalance: ${self.balance}"
 
     def depositar(self, deposito):
-        print(f"Saldo Anterior: {self.balance}\nMonto a depositar: {deposito}")
+        print(f"Saldo Anterior: ${self.balance}\nMonto a depositar: ${deposito}")
         self.balance += deposito
-        print(f"Saldo Actual: {self.balance}")
-        return self.balance
+        print(f"Saldo Actual: ${self.balance}")
 
     def retirar(self, retiro):
         if retiro > self.balance:
             print(f"No se admite el retiro, no tiene suficiente saldo en su cuenta.")
-            print(f"Saldo Actual: {self.balance}")
-            return self.balance
+            print(f"Saldo Actual: ${self.balance}")
         elif retiro <= self.balance:
-            print(f"Saldo Anterior: {self.balance}\nMonto a retirar: {retiro}")
+            print(f"Saldo Anterior: ${self.balance}\nMonto a retirar: ${retiro}")
             self.balance -= retiro
-            print(f"Saldo Actual: {self.balance}")
-            return self.balance
+            print(f"Saldo Actual: ${self.balance}")
 
 #Funciones
 
 def crear_cliente():
     nombre = input('Nombre del Cliente: ')
     apellido = input('Apellido del Cliente: ')
-    numero_cuenta = randint(1000, 9999)
-    saldo = 0
-    mi_cliente = Cliente(nombre, apellido, numero_cuenta, saldo)
+    numero_cuenta = input('Numero de cuenta del cliente: ')
+    mi_cliente = Cliente(nombre, apellido, numero_cuenta)
     return mi_cliente
 
 def lista_opciones():
     print('\nMenu de Transacciones')
     print('1.Depositos \n2.Retiros \n3.Salir')
     opcion = input('Seleccione una opción: ')
-    system('cls')
     return opcion
 
 def mostrar_opciones(cliente):
@@ -80,7 +72,6 @@ def mostrar_opciones(cliente):
 
 def validar_opcion(opcion):
     if opcion not in ['1','2','3']:
-        system('cls')
         print(f'La opcion ingresada "{opcion}" no es correcta, intente de nuevo.')
         opcion = lista_opciones()
     return opcion
